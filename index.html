@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PirateRate - Whitworth University Professor Reviews</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --whitworth-navy: #1e3a8a;
+            --whitworth-blue: #3b82f6;
+            --whitworth-light-blue: #60a5fa;
+            --whitworth-gold: #f59e0b;
+            --whitworth-orange: #ea580c;
+            --whitworth-white: #ffffff;
+            --whitworth-gray: #6b7280;
+            --whitworth-light-gray: #f3f4f6;
+            --whitworth-dark-gray: #374151;
+            --success-green: #10b981;
+            --error-red: #ef4444;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: var(--whitworth-light-gray);
+            color: var(--whitworth-dark-gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--whitworth-navy) 0%, var(--whitworth-blue) 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-text span {
+            font-size: 0.75rem;
+            opacity: 0.9;
+            display: block;
+            margin-top: -0.25rem;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            color: white;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--whitworth-navy) 0%, var(--whitworth-blue) 50%, var(--whitworth-light-blue) 100%);
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="white" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .highlight {
+            color: var(--whitworth-gold);
+            text-shadow: 0 0 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            opacity: 0.9;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--whitworth-blue);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--whitworth-navy);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 300px;
+        }
+
+        .pirate-ship {
+            position: relative;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .ship-body {
+            font-size: 8rem;
+            filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+        }
+
+        .ship-sail {
+            position: absolute;
+            top: -2rem;
+            right: -1rem;
+            font-size: 4rem;
+            animation: sway 4s ease-in-out infinite;
+        }
+
+        .floating-stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+
+        .star {
+            position: absolute;
+            font-size: 1.5rem;
+            animation: twinkle 3s ease-in-out infinite;
+            opacity: 0.8;
+        }
+
+        .star:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .star:nth-child(2) { top: 40%; right: 15%; animation-delay: 0.5s; }
+        .star:nth-child(3) { top: 60%; left: 20%; animation-delay: 1s; }
+        .star:nth-child(4) { top: 80%; right: 25%; animation-delay: 1.5s; }
+        .star:nth-child(5) { top: 30%; left: 50%; animation-delay: 2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.8; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Stats Section */
+        .stats {
+            background: white;
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--whitworth-light-gray);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--whitworth-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: var(--whitworth-gray);
+            font-weight: 500;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 4rem 0;
+            background: var(--whitworth-light-gray);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--whitworth-navy);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.125rem;
+            color: var(--whitworth-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .feature-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            color: var(--whitworth-blue);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--whitworth-navy);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--whitworth-gray);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, var(--whitworth-navy) 0%, var(--whitworth-blue) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cta-content h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-content p {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--whitworth-dark-gray);
+            color: white;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--whitworth-gold);
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+
+        .footer-section p {
+            color: var(--whitworth-light-gray);
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--whitworth-light-gray);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--whitworth-gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--whitworth-gray);
+            padding-top: 1rem;
+            text-align: center;
+            color: var(--whitworth-light-gray);
+            font-size: 0.875rem;
+        }
+
+        .footer-bottom a {
+            color: var(--whitworth-gold);
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mission Statement */
+        .mission-statement {
+            background: linear-gradient(135deg, var(--whitworth-gold), var(--whitworth-orange));
+            color: var(--whitworth-navy);
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .mission-statement h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .mission-statement p {
+            font-size: 1.125rem;
+            max-width: 800px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.25rem;
+            }
+            
+            .hero-actions {
+                justify-content: center;
+            }
+            
+            .ship-body {
+                font-size: 6rem;
+            }
+            
+            .ship-sail {
+                font-size: 3rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero {
+                padding: 2rem 0;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <div class="logo-icon">🏴‍☠️</div>
+                    <div class="logo-text">
+                        <h1>PirateRate</h1>
+                        <span>Whitworth University</span>
+                    </div>
+                </a>
+                
+                <nav class="nav">
+                    <a href="#" class="nav-link active">🏠 Home</a>
+                    <a href="#" class="nav-link">🔍 Find Professors</a>
+                    <a href="#" class="nav-link">➕ Add Review</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        Rate Your <span class="highlight">Professors</span>
+                        <br>
+                        <span class="subtitle">Whitworth University Pirates</span>
+                    </h1>
+                    <p class="hero-description">
+                        Join the Whitworth community in sharing honest reviews and helping fellow students 
+                        find the best professors for their academic journey. Your voice matters!
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#" class="btn btn-primary">
+                            🔍 Find Professors
+                        </a>
+                        <a href="#" class="btn btn-secondary">
+                            💬 Write a Review
+                        </a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="pirate-ship">
+                        <div class="ship-body">🚢</div>
+                        <div class="ship-sail">⛵</div>
+                    </div>
+                    <div class="floating-stars">
+                        <span class="star">⭐</span>
+                        <span class="star">⭐</span>
+                        <span class="star">⭐</span>
+                        <span class="star">⭐</span>
+                        <span class="star">⭐</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Statement -->
+    <section class="mission-statement">
+        <div class="container">
+            <h2>🎓 Our Mission: Supporting Student Success</h2>
+            <p>PirateRate is designed to help Whitworth University students make informed decisions about their education. We foster a constructive, supportive community where students can share experiences to benefit their peers - not to harm or attack anyone.</p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">150+</div>
+                    <div class="stat-label">Professors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Reviews</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Satisfaction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Available</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose PirateRate?</h2>
+                <p>Everything you need to make informed decisions about your education</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Find Your Professors</h3>
+                    <p>Search through Whitworth's faculty directory to find the perfect professor for your courses.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⭐</div>
+                    <h3>Rate & Review</h3>
+                    <p>Share your experiences and help fellow Pirates make informed decisions about their classes.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3>Community Driven</h3>
+                    <p>Join the Whitworth community in building a comprehensive database of professor reviews.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Verified Reviews</h3>
+                    <p>All reviews are verified to ensure authenticity and maintain quality standards.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Ready to Start Rating?</h2>
+                <p>Join thousands of Whitworth students who are already sharing their experiences</p>
+                <a href="#" class="btn btn-primary">
+                    📈 Explore Professors
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🏴‍☠️ PirateRate</h3>
+                    <p>Helping Whitworth University students make informed academic decisions through constructive, respectful feedback.</p>
+                    <p>Built with ❤️ for the Whitworth community.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Find Professors</a></li>
+                        <li><a href="#">Write a Review</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Community Guidelines</a></li>
+                        <li><a href="#">Report an Issue</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>Email: support@piraterate.com</p>
+                    <p>Report Issues: report@piraterate.com</p>
+                    <p>Privacy: privacy@piraterate.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 PirateRate. All rights reserved. | 
+                <a href="privacy-policy.html">Privacy Policy & Terms</a> | 
+                Designed for Whitworth University Students</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show alert for demo purposes
+                    const text = this.textContent.trim();
+                    if (text.includes('Find Professors')) {
+                        alert('🔍 Professor search feature coming soon!\n\nThis demo showcases the design and user experience. Full functionality will be available when the backend is complete.');
+                    } else if (text.includes('Add Review')) {
+                        alert('📝 Review submission feature coming soon!\n\nThis demo showcases the design and user experience. Full functionality will be available when the backend is complete.');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
